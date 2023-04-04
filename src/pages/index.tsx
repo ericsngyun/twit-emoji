@@ -4,6 +4,29 @@ import { useUser, SignInButton, SignOutButton } from "@clerk/nextjs"
 
 import { api } from "~/utils/api";
 
+
+const CreatePostWizard = () => {
+  const { user } = useUser();
+
+  if(!user) return null;
+
+  return <div className = "flex gap-3 w-full">
+    <img 
+      src = {user.profileImageUrl} 
+      alt = "Profile Image" 
+      className = "w-14 h-14 rounded-full" 
+    />
+    <input 
+      placeholder = "Type some emojis!" 
+      className = "bg-transparent grow p-4" 
+
+    />
+
+  </div>
+
+
+}
+
 const Home: NextPage = () => {
 
   const { data, isLoading } = api.posts.getAll.useQuery();
@@ -27,7 +50,7 @@ const Home: NextPage = () => {
               <div className = "flex justify-center">
                 <SignInButton />
               </div>}
-            {!!user.isSignedIn && <SignOutButton/>}
+            {!!user.isSignedIn && <CreatePostWizard/>}
           </div>
           <div className = "flex flex-col">
             {[...data!, ...data!]?.map((post) => (
