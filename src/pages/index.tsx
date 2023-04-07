@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useUser, SignInButton, SignOutButton } from "@clerk/nextjs"
 
-import { api } from "~/utils/api";
+import { RouterOutputs, api } from "~/utils/api";
 
 
 const CreatePostWizard = () => {
@@ -25,8 +25,16 @@ const CreatePostWizard = () => {
     />
 
   </div>
+}
 
 
+type PostWithUser = RouterOutputs["posts"]["getAll"][number];
+
+const PostView = (props: PostWithUser) => {
+  const { post, author } = props;
+  return(
+  <div key = {post.id} className = "border-b border-slate-400">{post.content}</div>
+  )
 }
 
 const Home: NextPage = () => {
@@ -55,9 +63,9 @@ const Home: NextPage = () => {
             {!!user.isSignedIn && <CreatePostWizard/>}
           </div>
           <div className = "flex flex-col">
-            {[...data!, ...data!]?.map((post) => (
-              <div key = {post.id} className = "border-b border-slate-400">{post.content}</div>
-            )) }
+            {[...data, ...data]?.map((fullPost) => (
+              <PostView {...fullPost} key={fullPost.post.id}/>
+            ))}
           </div>
         </div>
       </main>
