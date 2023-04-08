@@ -33,7 +33,10 @@ type PostWithUser = RouterOutputs["posts"]["getAll"][number];
 const PostView = (props: PostWithUser) => {
   const { post, author } = props;
   return(
-  <div key = {post.id} className = "border-b border-slate-400">{post.content}</div>
+    <div key = {post.id} className = "border-b border-slate-400">
+      <img src = {author?.profilePicture} alt = "author img"/>
+      {post.content}
+    </div>
   )
 }
 
