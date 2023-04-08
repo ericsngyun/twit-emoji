@@ -23,7 +23,7 @@ const CreatePostWizard = () => {
       className = "bg-transparent grow p-4" 
 
     />
-
+    <SignOutButton/>
   </div>
 }
 
@@ -34,7 +34,7 @@ const PostView = (props: PostWithUser) => {
   const { post, author } = props;
   return(
     <div key = {post.id} className = "border-b border-slate-400">
-      <img src = {author?.profilePicture} alt = "author img"/>
+      {/* <img src = {author?.profilePicture} alt = "author img"/> */}
       {post.content}
     </div>
   )
